@@ -1,0 +1,16 @@
+{
+  "name": "Pulse — Messenger",
+  "short_name": "Pulse",
+  "description": "Pulse — fast, private and modern messaging.",
+  "lang": "en",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0b0e16",
+  "theme_color": "#4f64c7",
+  "categories": ["social", "communication"],
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
