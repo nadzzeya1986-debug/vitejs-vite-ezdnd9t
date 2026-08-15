@@ -1,44 +1,38 @@
 /* =========================================================
-   MESSENGER — PROFILE + ICON SYSTEM
-   Telegram-inspired interface polish.
-
-   This file is loaded after App.css from main.tsx.
-   The original stylesheet is intentionally left untouched.
-   These rules override the visual layer only.
+   MESSENGER — PROFILE TAB REDESIGN
+   Telegram-inspired profile controls.
+   This file overrides only the profile area.
    ========================================================= */
 
-/* PROFILE FOOTER */
 .profile {
   position: relative;
-  min-height: 82px;
-  padding: 11px 12px 11px 14px;
+  min-height: 86px;
+  padding: 10px 12px 10px 14px;
   display: flex;
   align-items: center;
   gap: 11px;
   border-top: 1px solid #e5e9ef;
   background: #ffffff;
-  transition: background 0.16s ease, box-shadow 0.16s ease;
 }
 
 .profile:hover {
-  background: #f7faff;
-  box-shadow: inset 3px 0 0 #5066c8;
+  background: #f7f9fc;
 }
 
 .profile .avatar.small {
   position: relative;
-  width: 48px;
-  height: 48px;
-  min-width: 48px;
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(145deg, #667bd6 0%, #4056a1 100%);
+  background: linear-gradient(145deg, #5f75d2 0%, #4056a1 100%);
   color: #ffffff;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
-  box-shadow: 0 4px 12px rgba(80, 102, 200, 0.22);
+  box-shadow: 0 4px 12px rgba(80, 102, 200, 0.20);
 }
 
 .profile .avatar.small::after {
@@ -46,12 +40,11 @@
   position: absolute;
   right: 0;
   bottom: 1px;
-  width: 12px;
-  height: 12px;
+  width: 13px;
+  height: 13px;
   border: 2px solid #ffffff;
   border-radius: 50%;
   background: #35c875;
-  box-sizing: border-box;
 }
 
 .profile-info {
@@ -92,20 +85,23 @@
   box-shadow: 0 0 0 2px #e8f8ef;
 }
 
+/* Profile action button: clean Telegram-style circular control. */
 .profile > button {
-  width: 38px !important;
-  height: 38px;
-  min-width: 38px;
-  flex: 0 0 38px;
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+  flex: 0 0 42px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  background: transparent !important;
-  color: #778392;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: #f1f4f8 !important;
+  color: #617083 !important;
   font-size: 0 !important;
   line-height: 1;
-  transition: background 0.16s ease, color 0.16s ease, transform 0.16s ease;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.12s ease;
 }
 
 .profile > button::before {
@@ -116,9 +112,20 @@
 }
 
 .profile > button:hover {
-  background: #eef3ff !important;
-  color: #5066c8;
-  transform: scale(1.05);
+  background: #e7eef9 !important;
+  color: #5066c8 !important;
+  transform: scale(1.04);
+}
+
+.profile > button:active {
+  transform: scale(0.96);
+}
+
+/* When the button is used to save an edited name, show a check instead. */
+.profile:has(.profile-info input) > button::before {
+  content: '✓';
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .profile-info input {
@@ -131,16 +138,85 @@
   background: #ffffff;
   color: #182230;
   font-size: 13px;
-  box-shadow: 0 1px 3px rgba(30, 40, 70, 0.04);
 }
 
 .profile-info input:focus {
-  border-color: #8d9bda !important;
+  border-color: #7f91d7 !important;
   box-shadow: 0 0 0 3px rgba(80, 102, 200, 0.10);
 }
 
-/* BRAND */
+/* =========================================================
+   PROFILE MENU
+   =========================================================
+
+   The existing profile row stays compact. The visual language
+   below is also used by future profile/settings panels.
+   ========================================================= */
+
+.profile-menu-button {
+  width: 100%;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 0 13px;
+  border-radius: 12px;
+  background: transparent;
+  color: #182230;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.profile-menu-button:hover {
+  background: #f1f4f8;
+}
+
+.profile-menu-icon {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #eef3ff;
+  color: #5066c8;
+  font-size: 17px;
+}
+
+.profile-menu-button strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.profile-menu-button span {
+  margin-left: auto;
+  color: #a0a9b3;
+  font-size: 18px;
+}
+
+.profile-menu-divider {
+  height: 1px;
+  margin: 5px 10px;
+  background: #e8edf2;
+}
+
+.profile-danger {
+  color: #e2555b !important;
+}
+
+.profile-danger .profile-menu-icon {
+  background: #fff0f1;
+  color: #e2555b;
+}
+
+/* =========================================================
+   BRAND / SIDEBAR ICONS
+   ========================================================= */
+
 .brand-logo {
+  position: relative;
   overflow: hidden;
   background: linear-gradient(145deg, #5f75d2 0%, #4056a1 100%) !important;
   color: transparent !important;
@@ -171,12 +247,32 @@
   border-radius: 1px;
 }
 
-/* SEARCH */
+.logout-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #f1f4f8 !important;
+  color: #657285 !important;
+  font-size: 0 !important;
+}
+
+.logout-button::before {
+  content: '↪';
+  color: currentColor;
+  font-size: 21px;
+}
+
+.logout-button:hover {
+  background: #e7eef9 !important;
+  color: #5066c8 !important;
+}
+
+/* Search icon */
 .search > span {
+  position: relative;
   width: 20px;
   height: 20px;
   flex: 0 0 20px;
-  position: relative;
   color: transparent !important;
   font-size: 0 !important;
 }
@@ -202,205 +298,16 @@
   border-radius: 2px;
   background: #87909e;
   transform: rotate(45deg);
-  transform-origin: left center;
 }
 
-/* LOGOUT */
-.logout-button {
-  overflow: hidden;
-  color: transparent !important;
-  font-size: 0 !important;
-  background: #f4f6f8 !important;
-  transition: background 0.16s ease, color 0.16s ease, transform 0.16s ease;
-}
-
-.logout-button::before {
-  content: '↪';
-  color: #687385;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 21px;
-  font-weight: 400;
-}
-
-.logout-button:hover {
-  background: #eef3ff !important;
-  transform: translateX(1px);
-}
-
-.logout-button:hover::before {
-  color: #5066c8;
-}
-
-/* EMPTY AND LOGIN ICONS */
-.empty-icon,
-.login-icon {
-  position: relative;
-  overflow: hidden;
-  color: transparent !important;
-  font-size: 0 !important;
-  background: linear-gradient(145deg, #eef3ff 0%, #e3eaff 100%) !important;
-}
-
-.empty-icon::before,
-.login-icon::before {
-  content: '';
-  position: absolute;
-  width: 30px;
-  height: 23px;
-  left: 50%;
-  top: 50%;
-  margin-left: -15px;
-  margin-top: -13px;
-  border-radius: 10px;
-  background: #5066c8;
-}
-
-.empty-icon::after,
-.login-icon::after {
-  content: '';
-  position: absolute;
-  width: 10px;
-  height: 9px;
-  left: calc(50% - 12px);
-  top: calc(50% + 5px);
-  background: #5066c8;
-  transform: skewY(-30deg) rotate(8deg);
-  border-radius: 1px;
-}
-
-/* START CHAT */
-.start-chat > div {
-  width: 62px;
-  height: 62px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 14px;
-  border-radius: 20px;
-  background: #eef3ff;
-  color: transparent !important;
-  font-size: 0 !important;
-}
-
-.start-chat > div::before {
-  content: '＋';
-  color: #5066c8;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 31px;
-  font-weight: 300;
-  line-height: 1;
-}
-
-/* CHAT ACTIONS */
-.chat-actions button {
-  color: transparent !important;
-  font-size: 0 !important;
-  background: #f4f6f9 !important;
-  transition: background 0.16s ease, transform 0.16s ease;
-}
-
-.chat-actions button::before {
-  color: #687385;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 20px;
-  line-height: 1;
-}
-
-.chat-actions button:nth-child(1)::before {
-  content: '☎';
-}
-
-.chat-actions button:nth-child(2)::before {
-  content: '⌕';
-}
-
-.chat-actions button:nth-child(3)::before {
-  content: '⋮';
-  font-size: 25px;
-}
-
-.chat-actions button:hover {
-  background: #eef3ff !important;
-  transform: translateY(-1px);
-}
-
-.chat-actions button:hover::before {
-  color: #5066c8;
-}
-
-/* COMPOSER */
-.attach,
-.emoji,
-.send {
-  color: transparent !important;
-  font-size: 0 !important;
-  position: relative;
-  overflow: hidden;
-}
-
-.attach::before {
-  content: '⌕';
-  color: #687385;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 22px;
-  line-height: 1;
-  transform: rotate(-35deg);
-}
-
-.emoji::before {
-  content: '☺';
-  color: #687385;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 22px;
-  line-height: 1;
-}
-
-.send::before {
-  content: '➤';
-  color: #ffffff;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 20px;
-  line-height: 1;
-  transform: translateX(-1px);
-}
-
-.attach:hover,
-.emoji:hover {
-  background: #eef3ff !important;
-}
-
-.attach:hover::before,
-.emoji:hover::before {
-  color: #5066c8;
-}
-
-.send:hover {
-  transform: translateY(-1px);
-}
-
-/* AVATARS */
-.user .avatar {
-  box-shadow: 0 3px 10px rgba(64, 86, 161, 0.12);
-}
-
-/* TOUCH */
 @media (hover: none) {
   .profile:hover {
     background: #ffffff;
-    box-shadow: none;
   }
 
   .profile > button:hover {
-    background: transparent !important;
-    color: #778392;
-    transform: none;
-  }
-
-  .logout-button:hover,
-  .chat-actions button:hover,
-  .attach:hover,
-  .emoji:hover,
-  .send:hover {
+    background: #f1f4f8 !important;
+    color: #617083 !important;
     transform: none;
   }
 }
@@ -408,7 +315,7 @@
 @media (max-width: 700px) {
   .profile {
     min-height: 74px;
-    padding: 10px 12px;
+    padding: 9px 11px;
   }
 
   .profile .avatar.small {
