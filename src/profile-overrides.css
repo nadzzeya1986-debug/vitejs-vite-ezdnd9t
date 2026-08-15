@@ -1,10 +1,13 @@
 /* =========================================================
-   MESSENGER — PROFILE REDESIGN
-   Telegram-inspired profile footer and profile controls
-   This file intentionally overrides the existing App.css
-   without removing or shortening the original stylesheet.
+   MESSENGER — PROFILE + ICON SYSTEM
+   Telegram-inspired interface polish.
+
+   This file is loaded after App.css from main.tsx.
+   The original stylesheet is intentionally left untouched.
+   These rules override the visual layer only.
    ========================================================= */
 
+/* PROFILE FOOTER */
 .profile {
   position: relative;
   min-height: 82px;
@@ -100,9 +103,16 @@
   border-radius: 50%;
   background: transparent !important;
   color: #778392;
-  font-size: 18px !important;
+  font-size: 0 !important;
   line-height: 1;
   transition: background 0.16s ease, color 0.16s ease, transform 0.16s ease;
+}
+
+.profile > button::before {
+  content: '✎';
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 19px;
+  font-weight: 400;
 }
 
 .profile > button:hover {
@@ -129,12 +139,251 @@
   box-shadow: 0 0 0 3px rgba(80, 102, 200, 0.10);
 }
 
-/* Make the profile area feel like a Telegram account row on desktop. */
-.sidebar > .profile {
-  flex-shrink: 0;
+/* BRAND */
+.brand-logo {
+  overflow: hidden;
+  background: linear-gradient(145deg, #5f75d2 0%, #4056a1 100%) !important;
+  color: transparent !important;
+  box-shadow: 0 7px 18px rgba(80, 102, 200, 0.20);
+  font-size: 0 !important;
 }
 
-/* Profile-related buttons remain clean on touch screens. */
+.brand-logo::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 15px;
+  left: 11px;
+  top: 12px;
+  border-radius: 7px;
+  background: #ffffff;
+}
+
+.brand-logo::after {
+  content: '';
+  position: absolute;
+  left: 13px;
+  top: 24px;
+  width: 7px;
+  height: 7px;
+  background: #ffffff;
+  transform: skewY(-32deg) rotate(8deg);
+  border-radius: 1px;
+}
+
+/* SEARCH */
+.search > span {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  position: relative;
+  color: transparent !important;
+  font-size: 0 !important;
+}
+
+.search > span::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #87909e;
+  border-radius: 50%;
+}
+
+.search > span::after {
+  content: '';
+  position: absolute;
+  left: 13px;
+  top: 13px;
+  width: 7px;
+  height: 2px;
+  border-radius: 2px;
+  background: #87909e;
+  transform: rotate(45deg);
+  transform-origin: left center;
+}
+
+/* LOGOUT */
+.logout-button {
+  overflow: hidden;
+  color: transparent !important;
+  font-size: 0 !important;
+  background: #f4f6f8 !important;
+  transition: background 0.16s ease, color 0.16s ease, transform 0.16s ease;
+}
+
+.logout-button::before {
+  content: '↪';
+  color: #687385;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 21px;
+  font-weight: 400;
+}
+
+.logout-button:hover {
+  background: #eef3ff !important;
+  transform: translateX(1px);
+}
+
+.logout-button:hover::before {
+  color: #5066c8;
+}
+
+/* EMPTY AND LOGIN ICONS */
+.empty-icon,
+.login-icon {
+  position: relative;
+  overflow: hidden;
+  color: transparent !important;
+  font-size: 0 !important;
+  background: linear-gradient(145deg, #eef3ff 0%, #e3eaff 100%) !important;
+}
+
+.empty-icon::before,
+.login-icon::before {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 23px;
+  left: 50%;
+  top: 50%;
+  margin-left: -15px;
+  margin-top: -13px;
+  border-radius: 10px;
+  background: #5066c8;
+}
+
+.empty-icon::after,
+.login-icon::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 9px;
+  left: calc(50% - 12px);
+  top: calc(50% + 5px);
+  background: #5066c8;
+  transform: skewY(-30deg) rotate(8deg);
+  border-radius: 1px;
+}
+
+/* START CHAT */
+.start-chat > div {
+  width: 62px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  border-radius: 20px;
+  background: #eef3ff;
+  color: transparent !important;
+  font-size: 0 !important;
+}
+
+.start-chat > div::before {
+  content: '＋';
+  color: #5066c8;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 31px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+/* CHAT ACTIONS */
+.chat-actions button {
+  color: transparent !important;
+  font-size: 0 !important;
+  background: #f4f6f9 !important;
+  transition: background 0.16s ease, transform 0.16s ease;
+}
+
+.chat-actions button::before {
+  color: #687385;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.chat-actions button:nth-child(1)::before {
+  content: '☎';
+}
+
+.chat-actions button:nth-child(2)::before {
+  content: '⌕';
+}
+
+.chat-actions button:nth-child(3)::before {
+  content: '⋮';
+  font-size: 25px;
+}
+
+.chat-actions button:hover {
+  background: #eef3ff !important;
+  transform: translateY(-1px);
+}
+
+.chat-actions button:hover::before {
+  color: #5066c8;
+}
+
+/* COMPOSER */
+.attach,
+.emoji,
+.send {
+  color: transparent !important;
+  font-size: 0 !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.attach::before {
+  content: '⌕';
+  color: #687385;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 22px;
+  line-height: 1;
+  transform: rotate(-35deg);
+}
+
+.emoji::before {
+  content: '☺';
+  color: #687385;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.send::before {
+  content: '➤';
+  color: #ffffff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  line-height: 1;
+  transform: translateX(-1px);
+}
+
+.attach:hover,
+.emoji:hover {
+  background: #eef3ff !important;
+}
+
+.attach:hover::before,
+.emoji:hover::before {
+  color: #5066c8;
+}
+
+.send:hover {
+  transform: translateY(-1px);
+}
+
+/* AVATARS */
+.user .avatar {
+  box-shadow: 0 3px 10px rgba(64, 86, 161, 0.12);
+}
+
+/* TOUCH */
 @media (hover: none) {
   .profile:hover {
     background: #ffffff;
@@ -146,9 +395,16 @@
     color: #778392;
     transform: none;
   }
+
+  .logout-button:hover,
+  .chat-actions button:hover,
+  .attach:hover,
+  .emoji:hover,
+  .send:hover {
+    transform: none;
+  }
 }
 
-/* Compact profile on smaller screens. */
 @media (max-width: 700px) {
   .profile {
     min-height: 74px;
