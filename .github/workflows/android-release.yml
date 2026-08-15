@@ -1,0 +1,71 @@
+name: Pulse Android Play build
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  play-aab:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm install
+      - name: Build web app
+        run: npm run build
+      - name: Add Android platform
+        run: npx cap add android
+      - name: Sync Capacitor
+        run: npx cap sync android
+      - name: Add camera and microphone permissions
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('android/app/src/main/AndroidManifest.xml')
+          s = p.read_text()
+          marker = '<manifest xmlns:android="http://schemas.android.com/apk/res/android">'
+          additions = '\n    <uses-permission android:name="android.permission.CAMERA" />\n    <uses-permission android:name="android.permission.RECORD_AUDIO" />\n    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />\n'
+          if 'android.permission.CAMERA' not in s:
+              s = s.replace(marker, marker + additions)
+          p.write_text(s)
+          PY
+      - name: Configure release signing
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          test -n "$KEYSTORE_B64" || (echo 'Missing ANDROID_KEYSTORE_BASE64 secret' && exit 1)
+          echo "$KEYSTORE_B64" | base64 --decode > android/pulse-release.keystore
+          cat >> android/gradle.properties <<EOF
+          PULSE_STORE_FILE=pulse-release.keystore
+          PULSE_STORE_PASSWORD=$KEYSTORE_PASSWORD
+          PULSE_KEY_ALIAS=$KEY_ALIAS
+          PULSE_KEY_PASSWORD=$KEY_PASSWORD
+          EOF
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('android/app/build.gradle')
+          s=p.read_text()
+          if 'signingConfigs {' not in s:
+              s=s.replace('android {', '''android {\n    signingConfigs {\n        release {\n            storeFile file(project.findProperty("PULSE_STORE_FILE") ?: "pulse-release.keystore")\n            storePassword project.findProperty("PULSE_STORE_PASSWORD")\n            keyAlias project.findProperty("PULSE_KEY_ALIAS")\n            keyPassword project.findProperty("PULSE_KEY_PASSWORD")\n        }\n    }\n''', 1)
+          s=s.replace('buildTypes {\n        release {', 'buildTypes {\n        release {\n            signingConfig signingConfigs.release', 1)
+          p.write_text(s)
+          PY
+      - name: Build signed Android App Bundle
+        working-directory: android
+        run: ./gradlew bundleRelease
+      - name: Upload Play AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: pulse-play-aab
+          path: android/app/build/outputs/bundle/release/app-release.aab
