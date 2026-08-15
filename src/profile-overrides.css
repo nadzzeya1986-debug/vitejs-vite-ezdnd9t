@@ -1,0 +1,163 @@
+/* =========================================================
+   MESSENGER — PROFILE REDESIGN
+   Telegram-inspired profile footer and profile controls
+   This file intentionally overrides the existing App.css
+   without removing or shortening the original stylesheet.
+   ========================================================= */
+
+.profile {
+  position: relative;
+  min-height: 82px;
+  padding: 11px 12px 11px 14px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  border-top: 1px solid #e5e9ef;
+  background: #ffffff;
+  transition: background 0.16s ease, box-shadow 0.16s ease;
+}
+
+.profile:hover {
+  background: #f7faff;
+  box-shadow: inset 3px 0 0 #5066c8;
+}
+
+.profile .avatar.small {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #667bd6 0%, #4056a1 100%);
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(80, 102, 200, 0.22);
+}
+
+.profile .avatar.small::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 1px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  background: #35c875;
+  box-sizing: border-box;
+}
+
+.profile-info {
+  flex: 1;
+  min-width: 0;
+  padding: 1px 0;
+}
+
+.profile-info strong {
+  display: block;
+  overflow: hidden;
+  color: #182230;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 18px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-info span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  color: #35b96b;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 15px;
+}
+
+.profile-info span::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  min-width: 7px;
+  border-radius: 50%;
+  background: #35c875;
+  box-shadow: 0 0 0 2px #e8f8ef;
+}
+
+.profile > button {
+  width: 38px !important;
+  height: 38px;
+  min-width: 38px;
+  flex: 0 0 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: transparent !important;
+  color: #778392;
+  font-size: 18px !important;
+  line-height: 1;
+  transition: background 0.16s ease, color 0.16s ease, transform 0.16s ease;
+}
+
+.profile > button:hover {
+  background: #eef3ff !important;
+  color: #5066c8;
+  transform: scale(1.05);
+}
+
+.profile-info input {
+  width: 100%;
+  height: 36px;
+  padding: 0 10px !important;
+  border: 1px solid #d7deea !important;
+  border-radius: 10px !important;
+  outline: none;
+  background: #ffffff;
+  color: #182230;
+  font-size: 13px;
+  box-shadow: 0 1px 3px rgba(30, 40, 70, 0.04);
+}
+
+.profile-info input:focus {
+  border-color: #8d9bda !important;
+  box-shadow: 0 0 0 3px rgba(80, 102, 200, 0.10);
+}
+
+/* Make the profile area feel like a Telegram account row on desktop. */
+.sidebar > .profile {
+  flex-shrink: 0;
+}
+
+/* Profile-related buttons remain clean on touch screens. */
+@media (hover: none) {
+  .profile:hover {
+    background: #ffffff;
+    box-shadow: none;
+  }
+
+  .profile > button:hover {
+    background: transparent !important;
+    color: #778392;
+    transform: none;
+  }
+}
+
+/* Compact profile on smaller screens. */
+@media (max-width: 700px) {
+  .profile {
+    min-height: 74px;
+    padding: 10px 12px;
+  }
+
+  .profile .avatar.small {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+  }
+}
