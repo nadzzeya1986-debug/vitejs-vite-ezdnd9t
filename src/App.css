@@ -26,8 +26,6 @@ button {
   background: white;
 }
 
-/* SIDEBAR */
-
 .sidebar {
   width: 340px;
   display: flex;
@@ -298,8 +296,6 @@ button {
   background: #35c875;
 }
 
-/* CHAT */
-
 .chat {
   flex: 1;
   min-width: 0;
@@ -454,8 +450,6 @@ button {
   font-size: 14px;
 }
 
-/* COMPOSER */
-
 .composer {
   min-height: 76px;
   padding: 13px 20px;
@@ -497,8 +491,6 @@ button {
   color: white;
   font-size: 18px;
 }
-
-/* LOGIN */
 
 .login-page {
   min-height: 100vh;
@@ -595,34 +587,76 @@ button {
 }
 
 /* =========================================================
-   PROFILE — TELEGRAM-STYLE FOOTER CARD
+   PULSE — FINAL BRANDING AND PROFILE CONTROL
    ========================================================= */
 
-.profile {
-  min-height: 72px;
-  padding: 12px 14px 12px 16px;
-  border-top: 1px solid #e5e9ef;
-  background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
+.brand strong {
+  font-size: 0;
 }
 
-.profile::after {
-  content: '';
-  position: absolute;
-  left: 16px;
-  right: 16px;
-  bottom: 0;
-  height: 1px;
-  background: #f0f2f5;
+.brand strong::after {
+  content: 'Pulse';
+  font-size: 17px;
+}
+
+.login-card h1 {
+  font-size: 0;
+}
+
+.login-card h1::after {
+  content: 'Pulse';
+  font-size: 24px;
+}
+
+.profile {
+  min-height: 76px;
+  padding: 12px 14px 12px 16px;
+  border-top: 1px solid #e3e8f0;
+  background: linear-gradient(180deg, #ffffff 0%, #f8faff 100%);
+  transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
 }
 
 .profile:hover {
-  background: linear-gradient(180deg, #fbfcff 0%, #f5f8ff 100%);
-  box-shadow: none;
+  background: linear-gradient(180deg, #f9fbff 0%, #f0f5ff 100%);
+  box-shadow: inset 4px 0 0 #5066c8;
 }
 
 .profile .avatar.small {
-  position: relative;
-  overflow: visible;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  background: linear-gradient(145deg, #7187e5 0%, #4056a1 100%);
+  color: #ffffff;
+  font-size: 17px;
+  box-shadow: 0 5px 15px rgba(80, 102, 200, 0.25);
+}
+
+.profile > button {
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px;
+  flex: 0 0 42px;
+  border-radius: 50% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #5066c8 !important;
+  color: #ffffff !important;
+  font-size: 18px !important;
+  font-weight: 700;
+  box-shadow: 0 5px 15px rgba(80, 102, 200, 0.28);
+  transition: transform 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
+}
+
+.profile > button:hover {
+  background: #4056a1 !important;
+  color: #ffffff !important;
+  transform: scale(1.08);
+  box-shadow: 0 7px 18px rgba(80, 102, 200, 0.34);
+}
+
+.profile > button:active {
+  transform: scale(0.96);
 }
 
 .profile .avatar.small::after {
@@ -638,6 +672,12 @@ button {
   box-shadow: 0 1px 4px rgba(20, 50, 35, 0.15);
 }
 
-.profile > button {
-  margin-left: 2px;
+.profile-info span {
+  color: #35b96b;
+}
+
+.profile-info span::before {
+  width: 7px;
+  height: 7px;
+  flex-basis: 7px;
 }
