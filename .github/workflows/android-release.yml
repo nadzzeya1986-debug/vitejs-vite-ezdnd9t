@@ -1,0 +1,37 @@
+name: Pulse Android Release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm install
+      - name: Build web app
+        run: npm run build
+      - name: Install Capacitor CLI
+        run: npm install --no-save @capacitor/core @capacitor/cli @capacitor/android
+      - name: Create Android project
+        run: npx cap add android
+      - name: Sync Android
+        run: npx cap sync android
+      - name: Build debug APK
+        working-directory: android
+        run: ./gradlew assembleDebug
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: pulse-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
